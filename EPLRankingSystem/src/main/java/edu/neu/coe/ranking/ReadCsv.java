@@ -46,9 +46,4 @@ public class ReadCsv {
         return map;
 	}
 	
-	public static void main(String[] args) {
-		ReadCsv r=new ReadCsv();
-		System.out.print((r.amap.get("Chelsea")));
-	}
-	
 }
