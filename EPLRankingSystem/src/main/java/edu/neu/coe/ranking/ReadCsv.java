@@ -5,6 +5,7 @@ import java.io.FileReader;
 import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Map;
+
  
 public class ReadCsv {
 	
@@ -15,9 +16,12 @@ public class ReadCsv {
 	String p5="src\\main\\resources\\EPL20192020.csv";
 	String[] paths= {p1,p2,p3,p4,p5};
 	
-	public Map<String,Integer> read() {
-        Map<String,Integer> map= new HashMap<>();
-        for(String p: paths) {
+    Map<String,Map<Integer,Integer>> hmap= read(2);
+    Map<String,Map<Integer,Integer>> amap= read(3);  
+	
+	public Map<String,Map<Integer,Integer>> read(int i) {
+	    Map<String,Map<Integer,Integer>> map= new HashMap<>();	
+	    for(String p: paths) {
 	        try {       	
 				BufferedReader reade = new BufferedReader(new FileReader(p));       
 		        String line = null;
@@ -25,9 +29,13 @@ public class ReadCsv {
 		        while((line=reade.readLine())!=null){
 		        	if(index>0) {
 			            String item[] = line.split(",");
-			            for(int i=2;i<=3;i++) {
-			                map.put(item[i], map.getOrDefault(item[i], 0)+Integer.parseInt(item[i+2]));
+			            if(map.get(item[i])==null) {
+			            	Map<Integer,Integer> ori=new HashMap<>();
+			            	ori.put(Integer.parseInt(item[i+2]),1);
+			            	map.put(item[i], ori);
 			            }
+			            else 
+			            map.get(item[i]).put(Integer.parseInt(item[i+2]), map.get(item[i]).getOrDefault(Integer.parseInt(item[i+2]),0)+1);
 		            }
 		        	index++;
 		        }
@@ -36,6 +44,11 @@ public class ReadCsv {
 	        }
         }
         return map;
+	}
+	
+	public static void main(String[] args) {
+		ReadCsv r=new ReadCsv();
+		System.out.print((r.amap.get("Chelsea")));
 	}
 	
 }
