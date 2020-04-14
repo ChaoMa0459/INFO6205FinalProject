@@ -24,13 +24,14 @@ public class Team {
         Map<String, Double> map = new HashMap();
         for (Entry<Integer, Integer> teamA : hmap.get(A).entrySet()) {
             int numA = teamA.getKey();
-            //int htotal = teamA.getValue();
-            double scoringRateA = hmap.get(A).get(numA) / 95;
+            int htotal += teamA.getValue();
+            double scoringRateA = hmap.get(A).get(numA) / htotal;
             for (Entry<Integer, Ingeger> teamB : amap.get(B).entrySet()) {
                 int numB = teamB.getKey();
+                int atotal += teamB.getValue();
                 String score = String.valueOf(numA) + String.valueOf(numB);
-                double scoringRateB = amap.get(B).get(numB) / 95;
-                double pscore = hmap.get(A).get(numA) / 95 * amap.get(B).get(numB) / 95;
+                double scoringRateB = amap.get(B).get(numB) / atotal;
+                double pscore = hmap.get(A).get(numA) / htotal * amap.get(B).get(numB) / atotal;
             }
             map.put(score, pscore);
         }
