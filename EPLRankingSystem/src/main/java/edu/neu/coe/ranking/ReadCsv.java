@@ -17,8 +17,8 @@ public class ReadCsv {
 	String p5 = ifMac ? "src/main/resources/EPL20192020.csv": "src\\main\\resources\\EPL20192020.csv";
 	String[] paths = {p1,p2,p3,p4,p5};
 	
-    Map<String,Map<Integer,Integer>> hmap= read(2);
-    Map<String,Map<Integer,Integer>> amap= read(3);  
+    public static Map<String,Map<Integer,Integer>> hmap= read(2);
+    public static Map<String,Map<Integer,Integer>> amap= read(3);
 	
 	public Map<String,Map<Integer,Integer>> read(int i) {
 	    Map<String,Map<Integer,Integer>> map= new HashMap<>();	
