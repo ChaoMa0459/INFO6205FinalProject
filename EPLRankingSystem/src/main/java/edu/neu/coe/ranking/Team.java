@@ -1,22 +1,16 @@
 package edu.neu.coe.ranking;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 import java.util.Map.Entry;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Comparator;
-import java.util.Collections;
 
 //import main.java.edu.neu.coe.ranking.ReadCsv;
 public class Team {
 
-    public int result(String A, String B) {
-        ReadCsv readcsvh = new ReadCsv();
-        Map<String, Map<Integer, Integer>> hmap = readcsvh.hmap;
-        ReadCsv readcsva = new ReadCsv();
-        Map<String, Map<Integer,Integer>> amap = readcsva.amap;
+    // A: home team, B: away team
+    // return a prediction result based on probability
+    public int result(String A, String B, Map<String, Map<Integer, Integer>> hmap, Map<String, Map<Integer,Integer>> amap) {
 
+        // map of final score and probability
         Map<String, Double> map = new HashMap<>();
         for (Entry<Integer, Integer> teamA : hmap.get(A).entrySet()) {
             int numA = teamA.getKey();
@@ -42,6 +36,7 @@ public class Team {
                 map.put(score, pscore);
             }
         }
+        // list of score and probability
         List<Map.Entry<String, Double>> list = new ArrayList<>(map.entrySet());
         list.sort(new Comparator<Entry<String, Double>>() {
 
@@ -51,26 +46,63 @@ public class Team {
                 return o2.getValue().compareTo(o1.getValue());
             }
         });
-//        for(Map.Entry s : list){
+
+//        for(Map.Entry<String, Double> s : list){
 //            System.out.println(s);
 //        }
-            String score = list.get(0).getKey();
-            if (Character.getNumericValue(score.charAt(0)) > Character.getNumericValue(score.charAt(1))) {
-                return 1;
-            } else if (Character.getNumericValue(score.charAt(0)) == Character.getNumericValue(score.charAt(1))) {
-                return 0;
-            } else {
-                return -1;
-            }
 
+        // get win, draw, lose record of home
+        String win = "win";
+        String lose = "lose";
+        String draw = "draw";
+
+        // key: win/lose/draw, value: probability
+        Map<String, Double> resultMap = new HashMap<>();
+        resultMap.put(win, 0.0);
+        resultMap.put(lose, 0.0);
+        resultMap.put(draw, 0.0);
+        for(Map.Entry<String, Double> s : map.entrySet()){
+            String score = s.getKey();
+            Double probability = s.getValue();
+            int hGoal = Character.getNumericValue(score.charAt(0));
+            int aGoal = Character.getNumericValue(score.charAt(1));
+            if (hGoal > aGoal) {
+                resultMap.put(win, resultMap.get(win) + probability);
+            } else if (hGoal == aGoal) {
+                resultMap.put(draw, resultMap.get(draw) + probability);
+            } else {
+                resultMap.put(lose, resultMap.get(lose) + probability);
+            }
+        }
+
+//        for (String res: resultMap.keySet()) {
+//            System.out.println(res + ": " + resultMap.get(res));
+//        }
+
+        // rand < P(win) -> home team win
+        // P(win) < rand < P(win) + P(draw) -> draw
+        // P(win) + P(draw) < rand < 1 -> home team lose
+        double rand = (double)(new Random().nextInt(99)) / 100;
+        if (rand <= resultMap.get(win)) {
+            return 1;
+        } else if (rand <= resultMap.get(win) + resultMap.get(draw)) {
+            return 0;
+        } else {
+            return -1;
+        }
     }
 
 //    main function for test
-//    public static void main(String[] args) {
-//        Team abc = new Team();
-//        int a = abc.result("Liverpool","Norwich");
-//        System.out.println(a);
-//    }
+    public static void main(String[] args) {
+        Team abc = new Team();
+        ReadCsv readcsv = new ReadCsv();
+        Map<String, Map<Integer, Integer>> hmap = readcsv.hmap;
+        Map<String, Map<Integer,Integer>> amap = readcsv.amap;
+        for (int i = 0; i < 10; i++) {
+            int a = abc.result("Liverpool", "Chelsea", hmap, amap);
+            System.out.println(a);
+        }
+    }
 }
 
 
