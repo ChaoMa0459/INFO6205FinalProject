@@ -61,6 +61,7 @@ public class Team {
         resultMap.put(win, 0.0);
         resultMap.put(lose, 0.0);
         resultMap.put(draw, 0.0);
+
         for(Map.Entry<String, Double> s : map.entrySet()){
             String score = s.getKey();
             Double probability = s.getValue();
@@ -84,11 +85,11 @@ public class Team {
         // P(win) + P(draw) < rand < 1 -> home team lose
         double rand = (double)(new Random().nextInt(99)) / 100;
         if (rand <= resultMap.get(win)) {
-            return 1;
+            return 3;
         } else if (rand <= resultMap.get(win) + resultMap.get(draw)) {
-            return 0;
+            return 1;
         } else {
-            return -1;
+            return 0;
         }
     }
 
@@ -98,7 +99,7 @@ public class Team {
         ReadCsv readcsv = new ReadCsv();
         Map<String, Map<Integer, Integer>> hmap = readcsv.hmap;
         Map<String, Map<Integer,Integer>> amap = readcsv.amap;
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < 100; i++) {
             int a = abc.result("Liverpool", "Chelsea", hmap, amap);
             System.out.println(a);
         }
