@@ -4,7 +4,7 @@ import java.util.*;
 import java.util.Map.Entry;
 
 //import main.java.edu.neu.coe.ranking.ReadCsv;
-public class Team {
+public class Prediction {
 
     // A: home team, B: away team
     // return a prediction result based on probability
@@ -95,7 +95,7 @@ public class Team {
 
 //    main function for test
     public static void main(String[] args) {
-        Team abc = new Team();
+        Prediction abc = new Prediction();
         ReadCsv readcsv = new ReadCsv();
         Map<String, Map<Integer, Integer>> hmap = readcsv.hmap;
         Map<String, Map<Integer,Integer>> amap = readcsv.amap;
