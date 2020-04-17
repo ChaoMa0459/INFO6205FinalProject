@@ -41,9 +41,12 @@ public class PredictionSpec {
                 lose++;
             }
         }
-//        System.out.println("win: " + win);
-//        System.out.println("draw: " + draw);
-//        System.out.println("lose: " + lose);
+        System.out.println("Home Team    Away Team");
+        System.out.println("Liverpool vs Norwich\n");
+        System.out.format("%8s%6s\n", "Result", "Count");
+        System.out.format("%8s%6d\n", "Win", win);
+        System.out.format("%8s%6d\n", "Draw", draw);
+        System.out.format("%8s%6d\n", "Lose", lose);
 
         //2. Check List has this value
         assertTrue(win > 100 && win <= 200);
