@@ -20,7 +20,7 @@ In this project, we designed a flexible predict model for EPL. Because of COVID-
 ## How to Run
 
 1. Clone the project
-2. Import the EPLRankingSystem folder with IDE(Eclapse or Intellij)
+2. Import the EPLRankingSystem folder with IDE(Eclipse or Intellij)
 3. Select import as maven project
 4. Right click and Run the main function of Prediction.java will run a 100 games simulation between Liverpool and Chelsea.
 5. Right click and Run the main function of RankingSystem.java will simulate a complete EPL 2019/2020 ranking.
