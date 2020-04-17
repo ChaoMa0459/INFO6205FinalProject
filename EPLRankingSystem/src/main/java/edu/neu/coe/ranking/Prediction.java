@@ -25,7 +25,7 @@ public class Prediction {
             for (Entry<Integer, Integer> teamB : amap.get(B).entrySet()) {
                 int numB = teamB.getKey();
                 int atotal = 0;
-                for (Entry<Integer, Integer> teamBtotal : hmap.get(B).entrySet()) {
+                for (Entry<Integer, Integer> teamBtotal : amap.get(B).entrySet()) {
                     atotal += teamBtotal.getValue();
                 }
                 double scoringRateB = (double) amap.get(B).get(numB) / atotal;
